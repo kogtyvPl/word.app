@@ -26,7 +26,7 @@ local config = {
 
 local currentScriptDirectory = filesystem.path(system.getCurrentScript())
 local toolsPath = currentScriptDirectory .. "Tools/"
-local configPath = paths.user.applicationData .. "Picture Edit/Config2.cfg"
+local configPath = paths.user.applicationData .. "Word/Config2.cfg"
 local savePath
 local saveItem
 local tool
@@ -333,7 +333,7 @@ local function saveAs()
   local filesystemDialog = GUI.addFilesystemDialog(workspace, true, 50, math.floor(window.height * 0.8), "Сохранить", "Отмена", "Имя файла", "/")
   filesystemDialog:setMode(GUI.IO_MODE_SAVE, GUI.IO_MODE_FILE)
   filesystemDialog:addExtensionFilter(".doc")
-  filesystemDialog:addExtensionFilter(".ocifstring")
+  filesystemDialog:addExtensionFilter(".rawdoc")
   filesystemDialog:expandPath(paths.user.desktop)
   filesystemDialog.filesystemTree.selectedItem = paths.user.desktop
   filesystemDialog:show()
@@ -481,47 +481,47 @@ fileItem:addItem("Открыть документ", false, "^O").onTouch = funct
   open()
 end
 
-local fileItemSubMenu = fileItem:addSubMenuItem("Открыть систему", #config.recentFiles == 0)
-for i = 1, #config.recentFiles do
-  fileItemSubMenu:addItem(text.limit(config.recentFiles[i], 32, "Лево")).onTouch = function()
-    loadImage(config.recentFiles[i])
+--local fileItemSubMenu = fileItem:addSubMenuItem("Открыть систему", #config.recentFiles == 0)
+--for i = 1, #config.recentFiles do
+  --fileItemSubMenu:addItem(text.limit(config.recentFiles[i], 32, "Лево")).onTouch = function()
+    --loadImage(config.recentFiles[i])
 
-    window.image.reposition()
-    workspace:draw()
-  end
-end
+    --window.image.reposition()
+    --workspace:draw()
+  --end
+--end
 
-fileItem:addItem("Открыть по URL").onTouch = function()
-  local container = GUI.addBackgroundContainer(workspace, true, true, "Открыть по URL")
+--fileItem:addItem("Открыть по URL").onTouch = function()
+  --local container = GUI.addBackgroundContainer(workspace, true, true, "Открыть по URL")
 
-  local input = container.layout:addChild(GUI.input(1, 1, 36, 3, 0xE1E1E1, 0x696969, 0x969696, 0xE1E1E1, 0x2D2D2D, "", "http://example.com/test.pic"))
-  input.onInputFinished = function()
-    if #input.text > 0 then
-      input:remove()
-      container.layout:addChild(GUI.label(1, 1, container.width, 1, 0x969696, "Downloading file..."):setAlignment(GUI.ALIGNMENT_HORIZONTAL_CENTER, GUI.ALIGNMENT_VERTICAL_TOP))
-      workspace:draw()
+  --local input = container.layout:addChild(GUI.input(1, 1, 36, 3, 0xE1E1E1, 0x696969, 0x969696, 0xE1E1E1, 0x2D2D2D, "", "http://example.com/test.pic"))
+  --input.onInputFinished = function()
+    --if #input.text > 0 then
+      --input:remove()
+      --container.layout:addChild(GUI.label(1, 1, container.width, 1, 0x969696, "Downloading file..."):setAlignment(GUI.ALIGNMENT_HORIZONTAL_CENTER, GUI.ALIGNMENT_VERTICAL_TOP))
+      --workspace:draw()
 
-      local temporaryPath = system.getTemporaryPath() .. ".doc"
-      local result, reason = internet.download(input.text, temporaryPath)
+      --local temporaryPath = system.getTemporaryPath() .. ".doc"
+      --local result, reason = internet.download(input.text, temporaryPath)
 
-      container:remove()
+      --container:remove()
 
-      if result then
-        loadImage(temporaryPath)
-        window.image.reposition()
+      --if result then
+        --loadImage(temporaryPath)
+        --window.image.reposition()
 
-        filesystem.remove(temporaryPath)
-        savePath, saveItem.disabled = nil, true
-      else
-        GUI.alert(reason)
-      end
+        --filesystem.remove(temporaryPath)
+        --savePath, saveItem.disabled = nil, true
+      --else
+        --GUI.alert(reason)
+      --end
 
-      workspace:draw()
-    end
-  end
+      --workspace:draw()
+    --end
+  --end
 
-  workspace:draw()
-end
+  --workspace:draw()
+--end
 
 fileItem:addSeparator()
 
@@ -551,18 +551,18 @@ menu:addItem("View").onTouch = function()
   workspace:draw()
 end
 
-menu:addItem("Hotkeys").onTouch = function()
+menu:addItem("Горячие клавиши").onTouch = function()
   local container = GUI.addBackgroundContainer(workspace, true, true, "Hotkeys")
   local lines = {
     "There are some hotkeys that works exactly like in real Photoshop:",
     " ",
-    "M - selection tool",
-    "V - move tool",
+    "M - Селекторl",
+    "V - Перемещательный инструмент",
     "C - resizer tool",
     "Alt - picker tool",
-    "B - brush tool",
-    "E - eraser tool",
-    "T - text tool",
+    "B - Выделение цветом",
+    "E - стерачка",
+    "T - Текстм",
     "G - fill tool",
     "F - braille tool",
     " ",
@@ -610,4 +610,4 @@ end
 
 window:resize(window.width, window.height)
 
-onToolTouch(7)
+onToolTouch(4)
